@@ -1,0 +1,11 @@
+.main {
+  height: 80px;
+  background-color: cadetblue;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+}
