@@ -3,28 +3,19 @@ import Spinner from "../../components/Spinner/Spinner";
 import Card from "../Card/Card";
 import styles from "./CardWrapper.module.css";
 
-export const CardWrapper = ({ characters, setCharacters }) => {
-  console.log(characters);
-
+export const CardWrapper = ({ tasks, setTasks }) => {
   return (
-    <div>
-      {characters ? (
-        <div className={styles.cardsWrapper}>
-          {characters.map((character) => (
-            <Card
-              key={character.id}
-              id={character.id}
-              name={character.name}
-              species={character.species}
-              image={character.image}
-              dateOfBirth={character.dateOfBirth}
-              setCharacters={setCharacters}
-            />
-          ))}
-        </div>
-      ) : (
-        <Spinner />
-      )}
+    <div className={styles.cardsWrapper}>
+      {tasks.map((task) => (
+        <Card
+          key={task.id}
+          id={task.id}
+          title={task.title}
+          isDone={task.isDone}
+          setTasks={setTasks}
+          tasks={tasks}
+        />
+      ))}
     </div>
   );
 };

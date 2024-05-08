@@ -1,27 +1,37 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import Header from "../components/Header/Header";
 import { CardWrapper } from "../components/CardWrapper/CardWrapper";
+import styles from "../styles/Home.module.css";
 
 const Home = () => {
-  const [characters, setCharacters] = useState(null);
+  const [tasks, setTasks] = useState([
+    { id: 1, isDone: false, title: "Learn HTML" },
+    { id: 2, isDone: true, title: "Learn CSS" },
+    { id: 3, isDone: false, title: "Learn React" },
+  ]);
+  const [task, setTask] = useState("");
 
-  const fetchCharacters = async () => {
-    const results = await axios.get(
-      "https://hp-api.onrender.com/api/characters"
-    );
+  const insertTask = () => {
+    const newTask = {
+      title: task,
+      isDone: false,
+      id: new Date(),
+    };
 
-    setCharacters(results.data);
+    setTasks([...tasks, newTask]);
+    setTask("");
   };
-
-  useEffect(() => {
-    fetchCharacters();
-  }, []);
 
   return (
     <div>
       <Header />
-      <CardWrapper characters={characters} setCharacters={setCharacters} />
+
+      <div className={styles.form}>
+        <input value={task} onChange={(e) => setTask(e.target.value)} />
+        <button onClick={insertTask}>Add Task</button>
+      </div>
+
+      <CardWrapper tasks={tasks} setTasks={setTasks} />
     </div>
   );
 };
