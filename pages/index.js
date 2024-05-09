@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header/Header";
 import { CardWrapper } from "../components/CardWrapper/CardWrapper";
-import styles from "../styles/Home.module.css";
+import Form from "../components/Form/Form";
 
 const Home = () => {
-  const [tasks, setTasks] = useState([
-    { id: 1, isDone: false, title: "Learn HTML" },
-    { id: 2, isDone: true, title: "Learn CSS" },
-    { id: 3, isDone: false, title: "Learn React" },
-  ]);
+  const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState("");
+
+  useEffect(() => {
+    setTasks(JSON.parse(localStorage.getItem("tasks")));
+  }, []);
 
   const insertTask = () => {
     const newTask = {
@@ -19,18 +19,14 @@ const Home = () => {
     };
 
     setTasks([...tasks, newTask]);
+    localStorage.setItem("tasks", JSON.stringify([...tasks, newTask]));
     setTask("");
   };
 
   return (
     <div>
       <Header />
-
-      <div className={styles.form}>
-        <input value={task} onChange={(e) => setTask(e.target.value)} />
-        <button onClick={insertTask}>Add Task</button>
-      </div>
-
+      <Form task={task} insertTask={insertTask} setTask={setTask} />
       <CardWrapper tasks={tasks} setTasks={setTasks} />
     </div>
   );

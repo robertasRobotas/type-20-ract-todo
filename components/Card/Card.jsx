@@ -8,8 +8,8 @@ const Card = ({ id, title, isDone, setTasks, tasks }) => {
     const tasksClone = tasks;
 
     tasksClone[index].isDone = !isDone;
-
     setTasks([...tasksClone]);
+    localStorage.setItem("tasks", JSON.stringify([...tasksClone]));
   };
 
   return (
